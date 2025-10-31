@@ -7,19 +7,25 @@ import java.io.*;
 
 public class PenghitungKataForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PenghitungKataForm
-     */
+    // 🟢 Tambahan: variabel kendali agar DocumentListener aktif setelah tombol Hitung ditekan
+    private boolean mulaiHitung = false;
+    
     public PenghitungKataForm() {
         initComponents();
         setTitle("Aplikasi Penghitung Kata");
         setLocationRelativeTo(null);
         
-        // Tambahkan DocumentListener agar hasil otomatis diperbarui
+        // Tambahkan DocumentListener, tapi hanya aktif jika mulaiHitung = true
         txtInput.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { hitungOtomatis(); }
-            public void removeUpdate(DocumentEvent e) { hitungOtomatis(); }
-            public void changedUpdate(DocumentEvent e) { hitungOtomatis(); }
+            public void insertUpdate(DocumentEvent e) {
+                if (mulaiHitung) hitungOtomatis();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                if (mulaiHitung) hitungOtomatis();
+            }
+            public void changedUpdate(DocumentEvent e) {
+                if (mulaiHitung) hitungOtomatis();
+            }
         });
     }
     // 🔹 Fungsi Hitung
@@ -261,7 +267,9 @@ public class PenghitungKataForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
-       hitungOtomatis();
+        // 🟢 Saat tombol "Hitung" ditekan, aktifkan DocumentListener
+        mulaiHitung = true;
+        hitungOtomatis();
     }//GEN-LAST:event_btnHitungActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
